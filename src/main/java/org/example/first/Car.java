@@ -1,4 +1,4 @@
-package org.example;
+package org.example.first;
 
 public abstract class Car {
     private static int countCar;

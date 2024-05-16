@@ -1,4 +1,4 @@
-package org.example;
+package org.example.first;
 
 public class Sedan extends Car{
 

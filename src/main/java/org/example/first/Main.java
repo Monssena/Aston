@@ -1,4 +1,4 @@
-package org.example;
+package org.example.first;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,8 @@ public class Main {
             if (car instanceof Hatchbacks hatchbacks) {
                 hatchbacks.setColor("Black");
                 System.out.println("New hatchback color: " + car.getColor());
+
+                System.out.println(hatchbacks.sound());
             }
         }
         System.out.println("Number of cars: " + Car.getCountCar());
