@@ -1,6 +1,7 @@
 package org.example.first;
 
 public class Hatchbacks extends Car{
+
     public Hatchbacks(String model, int releaseDate) {
         super(model, releaseDate);
         setColor("blue");
