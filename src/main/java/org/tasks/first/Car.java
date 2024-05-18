@@ -1,4 +1,4 @@
-package org.example.first;
+package org.tasks.first;
 
 public abstract class Car {
     private static int countCar;

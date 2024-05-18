@@ -1,4 +1,4 @@
-package org.example.second.task3;
+package org.tasks.second.task3;
 
 public class Computer {
 

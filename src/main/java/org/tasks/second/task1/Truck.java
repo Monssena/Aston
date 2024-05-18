@@ -1,4 +1,4 @@
-package org.example.second.task1;
+package org.tasks.second.task1;
 
 public class Truck extends Car {
 

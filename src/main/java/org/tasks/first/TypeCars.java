@@ -1,4 +1,4 @@
-package org.example.first;
+package org.tasks.first;
 
 public enum TypeCars {
     Sedan,
