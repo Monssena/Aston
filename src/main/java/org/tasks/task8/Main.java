@@ -4,6 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello master branch");
+        System.out.println("Hello dev branch");
     }
 }
