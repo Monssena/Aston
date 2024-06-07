@@ -1,24 +1,21 @@
 package org.tasks.task7;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Buyer implements IBuyer, IUseBasket, Runnable {
+public class Buyer implements Runnable, IBuyer, IUseBasket {
 
-    private static final AtomicInteger countOfBuyer = new AtomicInteger(0);
+    private static final AtomicInteger id = new AtomicInteger(0);
     private final String name;
+    private Basket basket;
+    private final Map<String, Good> availableGoods;
 
-    private final Map<String, Integer> products = new HashMap<>() {{
-        put("Bread", 60);
-        put("Milk", 90);
-        put("Apples", 300);
-        put("Sweets", 200);
-    }};
-
-    public Buyer() {
-        name = "Buyer №" + countOfBuyer;
-        countOfBuyer.incrementAndGet();
+    public Buyer(Map<String, Good> availableGoods) {
+        name = "Buyer №" + id.incrementAndGet();
+        this.availableGoods = availableGoods;
     }
 
     @Override
@@ -29,82 +26,62 @@ public class Buyer implements IBuyer, IUseBasket, Runnable {
         chooseGoods();
         putGoodsToBasket();
         goOut();
-
     }
 
     @Override
     public void enterToMarket() {
 
-        System.out.println(name + " вошел в магазин");
+        System.out.println(name + " вошел в магазин.");
     }
 
     @Override
     public void chooseGoods() {
 
-        int timeToChoose = ThreadLocalRandom.current().nextInt(500, 2001);
+        System.out.println(name + " выбирает товары.");
 
         try {
 
-            System.out.println(name + " выбирает товар");
-            Thread.sleep(timeToChoose);
-            System.out.println(name + " выбрал товар");
+            Thread.sleep(ThreadLocalRandom.current().nextInt(500, 2001));
 
-        } catch (InterruptedException InterruptedException) {
-
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void goOut() {
 
-        System.out.println(name + " оплатил и уходит");
+        System.out.println(name + " вышел из магазина.");
     }
 
     @Override
     public void takeBasket() {
-        int timeBasket = ThreadLocalRandom.current().nextInt(500, 2001);
 
-        try {
+        System.out.println(name + " взял корзину.");
 
-            Thread.sleep(timeBasket);
-
-        } catch (InterruptedException e) {}
-
-        System.out.println(name + " взял корзину");
+        basket = new Basket();
     }
 
     @Override
     public void putGoodsToBasket() {
 
-        List<Map.Entry<String, Integer>> goodsList = collectTheBasket();
+        int numberOfGoods = ThreadLocalRandom.current().nextInt(1, 5);
+        List<Good> goodsList = new ArrayList<>(availableGoods.values());
 
-        for (Map.Entry<String, Integer> entry : goodsList) {
-            System.out.println(name + " кладет в корзину: " + entry.getKey() + " - " + entry.getValue());
-        }
-    }
+        for (int i = 0; i < numberOfGoods; i++) {
 
-    public List<Map.Entry<String, Integer>> collectTheBasket() {
-
-        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(products.entrySet());
-
-        Collections.shuffle(entryList);
-
-        int MIN_PRODUCTS = 1;
-        int MAX_PRODUCTS = 4;
-
-        int numberElements = ThreadLocalRandom.current().nextInt(MIN_PRODUCTS, MAX_PRODUCTS);
-
-        for (int i = 0; i < numberElements; i++) {
-
-            int operationTime = ThreadLocalRandom.current().nextInt(500, 2001);
+            Good good = goodsList.get(ThreadLocalRandom.current().nextInt(goodsList.size()));
+            System.out.println(name + " положил " + good.getName() + " по цене " + good.getPrice() + "р. в корзину.");
+            basket.addGood(good);
 
             try {
 
-                Thread.sleep(operationTime);
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 2001));
 
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        return entryList.subList(0, numberElements);
     }
 }
